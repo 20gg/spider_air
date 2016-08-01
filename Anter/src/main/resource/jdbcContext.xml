@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+           http://www.springframework.org/schema/tx
+           http://www.springframework.org/schema/tx/spring-tx-3.2.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop-3.2.xsd">
+
+	<!-- Dao配置 -->
+
+	<!-- 配置数据源/使用的是druid连接池 -->
+	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
+		init-method="init" destroy-method="close">
+		<property name="url"
+			value="jdbc:mysql://218.244.131.86:3306/d_DBdata?characterEncoding=utf8" />
+		<property name="username" value="root" />
+		<property name="password" value="8013e3167d" />
+		<!-- 配置初始化大小、最小、最大 -->
+		<property name="initialSize" value="10" />
+		<property name="minIdle" value="5" />
+		<property name="maxActive" value="150" />
+		<!-- 配置获取连接等待超时的时间 -->
+		<property name="maxWait" value="30000" />
+		<!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是ms -->
+		<property name="timeBetweenEvictionRunsMillis" value="300000" />
+		<!-- 配置一个连接在池中最小生存的时间，单位是ms -->
+		<property name="minEvictableIdleTimeMillis" value="600000" />
+		<!-- 用来检测连接是否有效的sql，要求是一个查询语句。如果validationQuery为null，testOnBorrow、testOnReturn、testWhileIdle都不会其作用 -->
+		<property name="validationQuery" value="SELECT 'x'" />
+		<!-- 建议配置为true，不影响性能，并且保证安全性。申请连接的时候检测，如果空闲时间大于timeBetweenEvictionRunsMillis，执行validationQuery检测连接是否有效 -->
+		<property name="testWhileIdle" value="true" />
+		<!-- 申请连接时执行validationQuery检测连接是否有效，做了这个配置会降低性能 -->
+		<property name="testOnBorrow" value="false" />
+		<!-- 归还连接时执行validationQuery检测连接是否有效，做了这个配置会降低性能 -->
+		<property name="testOnReturn" value="false" />
+		<!-- 打开PSCache，并且指定每个连接上PSCache的大小 -->
+		<property name="poolPreparedStatements" value="true" />
+		<property name="maxPoolPreparedStatementPerConnectionSize"
+			value="100" />
+		<!-- 配置监控统计拦截的filters -->
+		<property name="filters" value="stat" />
+		<!-- 对于建立连接过长的连接强制关闭 -->
+		<property name="removeAbandoned" value="true" />
+		<!-- 如果连接建立时间超过了1800s，则强制将其关闭（单位s） -->
+		<property name="removeAbandonedTimeout" value="1800" />
+		<!-- 将当前关闭动作记录到日志 -->
+		<property name="logAbandoned" value="true" />
+	</bean>
+
+	<!-- ================================ 万恶的分割线 1 ====================================== -->
+
+	<!-- 配置JDBC模板类 -->
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<!-- ================================ 万恶的分割线 2 ====================================== -->
+	<!-- 声明式事务 -->
+	<!-- 配置事务管理器 -->
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	<!--Spring事务拦截器 -->
+	<bean id="transactionInterceptor"
+		class="org.springframework.transaction.interceptor.TransactionInterceptor">
+		<property name="transactionManager" ref="transactionManager" />
+		<!-- 配置事务属性 -->
+		<property name="transactionAttributes">
+			<props>
+				<!-- 以get/find/load等开头的所有方法采用只读型事务控制类型 -->
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="find*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="load*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="query*">PROPAGATION_REQUIRED,readOnly</prop>
+				<!-- 所有方法均进行事务控制，如果当前没有事务，则新建一个事务 -->
+				<prop key="*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<!-- 自动代理类 -->
+	<bean id="autoBeanNameProxyCreator"
+		class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
+		<property name="beanNames">
+			<list>
+				<value>*Dao</value>
+			</list>
+		</property>
+		<!-- 这个属性为true时，表示被代理的是目标类本身而不是目标类的接口 -->
+		<property name="proxyTargetClass">
+			<value>true</value>
+		</property>
+		<!-- 依赖注入上面定义的事务拦截器transactionInterceptor -->
+		<property name="interceptorNames">
+			<list>
+				<idref local="transactionInterceptor" />
+			</list>
+		</property>
+	</bean>
+
+	<!-- 声明事务管理器的增强 -->
+	<tx:advice id="transactionAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="get*" read-only="true" />
+			<tx:method name="*" />
+		</tx:attributes>
+	</tx:advice>
+	<!-- 声明事务管理的切面 -->
+	<aop:config>
+		<aop:pointcut id="allServiceMethod"
+			expression="execution(* com.go73cl.service.impl.*.*(..))" />
+		<aop:advisor advice-ref="transactionAdvice" pointcut-ref="allServiceMethod" />
+	</aop:config>
+
+	<!-- ================================ 万恶的分割线 3 ====================================== -->
+
+	<!-- 配置JDBC的DBdataDao -->
+	<bean id="dBdataDao" class="com.cl.aircrawler.dao.impl.DBdataDao">
+		<property name="jdbcTemplate" ref="jdbcTemplate" />
+	</bean>
+
+</beans>

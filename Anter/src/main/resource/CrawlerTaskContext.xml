@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+	<!-- 采集任务spring配置模板 -->
+
+	<!-- spring配置默认是单例模式,scope="prototype"改为多例模式 -->
+
+	<!-- ===================================================阿里部分=================================================== -->
+
+	<!-- 配置Ali任务(国内) -->
+	<bean id="alitrip.com_domesic" class="com.cl.crawler.task.impl.HttpClientCrawler"
+		scope="prototype">
+		<!-- 任务类型 -->
+		<property name="inter" value="0" />
+		<!-- 站点域名 -->
+		<property name="domain" value="alitrip.com" />
+		<!-- 请求类型 -->
+		<property name="method" value="GET" />
+		<!-- 是否需要加代理 -->
+		<property name="isProxyNeed" value="false" />
+		<!-- 国内(大陆)请求url -->
+		<property name="url"
+			value="https://sjipiao.alitrip.com/searchow/search.htm" />
+		<!-- 请求头map集 -->
+		<property name="headers">
+			<map>
+				<entry key="Host" value="sjipiao.alitrip.com" />
+				<entry key="User-Agent"
+					value="Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:38.0) Gecko/20100101 Firefox/38.0" />
+				<entry key="Accept"
+					value="text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8" />
+				<entry key="Accept-Language" value="zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3" />
+				<entry key="Accept-Encoding" value="gzip, deflate" />
+				<entry key="Connection" value="keep-alive" />
+				<entry key="Cookie"
+					value="isg=1F1A27D794BCF966FC5C760B2FC47C1F; l=AsPDMvqK2vBROQte5dDaBzvEc4ltbVd6; CNZZDATA30066717=cnzz_eid%3D1746614278-1434717413-http%253A%252F%252Fwww.alitrip.com%252F%26ntime%3D1440062781; cna=aI4ADl1XIVECAXAXvRCnfiv5; t=54ab934a3fb46877ab48ab2d461688c3; tracknick=%5Cu5343%5Cu8349%5Cu98DE%5Cu7D6E; cookie2=14d1389dd3f900be6057c4951a4a748e; _tb_token_=95RVi7nbHrBB; ck1=; uc1=cookie14=UoWzWcTbWf1gxQ%3D%3D&amp;existShop=false&amp;cookie16=WqG3DMC9UpAPBHGz5QBErFxlCA%3D%3D&amp;cookie21=VFC%2FuZ9ainBZ&amp;tag=7&amp;cookie15=VFC%2FuZ9ayeYq2g%3D%3D&amp;pas=0; uc3=nk2=pMYMMLwJh%2FU%3D&amp;id2=UU23ByQo7B9YOg%3D%3D&amp;vt3=F8dASM2aeTaVOAfK4OQ%3D&amp;lg2=U%2BGCWk%2F75gdr5Q%3D%3D; lgc=%5Cu5343%5Cu8349%5Cu98DE%5Cu7D6E; cookie1=AQGkUt8tAZ2R140Z%2FRLYV7HTUNlia4VBRyFDm5S2p8s%3D; unb=2554926098; skt=2e791d9b087b9898; _nk_=%5Cu5343%5Cu8349%5Cu98DE%5Cu7D6E; _l_g_=Ug%3D%3D; cookie17=UU23ByQo7B9YOg%3D%3D; hng=; login=true" />
+			</map>
+		</property>
+		<!-- 结果数据类型 -->
+		<property name="dataType" value="json" />
+	</bean>
+
+	<!-- 配置Ali任务(国际) -->
+	<bean id="alitrip.com_internation" class="com.cl.crawler.task.impl.HttpClientCrawler"
+		scope="prototype">
+		<!-- 任务类型 -->
+		<property name="inter" value="1" />
+		<!-- 站点域名 -->
+		<property name="domain" value="alitrip.com" />
+		<!-- 请求类型 -->
+		<property name="method" value="GET" />
+		<!-- 是否需要加代理 -->
+		<property name="isProxyNeed" value="false" />
+		<!-- 国际(港澳台)请求url -->
+		<property name="url"
+			value="https://sijipiao.alitrip.com/ie/flight_search_poller.do" />
+		<!-- 请求头map集 -->
+		<property name="headers">
+			<map>
+				<entry key="Host" value="sijipiao.alitrip.com" />
+				<entry key="User-Agent" value="Mozilla/5.0 (Windows NT 6.1; rv:39.0) Gecko/20100101 Firefox/39.0" />
+				<entry key="Accept" value="*/*" />
+				<entry key="Accept-Language" value="zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3" />
+				<entry key="Accept-Encoding" value="gzip, deflate" />
+				<entry key="Connection" value="keep-alive" />
+				<entry key="Cookie"
+					value="orderBy=undefined; cna=J8swDkwLvGICAdpedeq+f5yj; l=AujoT-QpqaxnkVAPUgky2U1QmNn6Z0wU; isg=7D0F0EEFF1B10EBF0AAD781F8DF9CB4B; t=0ee873bb1d889d8064c86dcba663cf0e; cookie2=189644a438110f6b1fb982d8eb0a1c1d; _tb_token_=FyfFgj4iPFAq; ck1=; uc1=cookie14=UoWzWi3WwWirjA%3D%3D&amp;existShop=false&amp;cookie16=V32FPkk%2FxXMk5UvIbNtImtMfJQ%3D%3D&amp;cookie21=WqG3DMC9FxUx&amp;tag=0&amp;cookie15=U%2BGCWk%2F75gdr5Q%3D%3D&amp;pas=0; uc3=nk2=pMYMMLwJh%2FU%3D&amp;id2=UU23ByQo7B9YOg%3D%3D&amp;vt3=F8dASMlIovm9NJkr7Jk%3D&amp;lg2=URm48syIIVrSKA%3D%3D; lgc=%5Cu5343%5Cu8349%5Cu98DE%5Cu7D6E; tracknick=%5Cu5343%5Cu8349%5Cu98DE%5Cu7D6E; cookie1=AQGkUt8tAZ2R140Z%2FRLYV7HTUNlia4VBRyFDm5S2p8s%3D; unb=2554926098; skt=e4aa25d67521baee; _nk_=%5Cu5343%5Cu8349%5Cu98DE%5Cu7D6E; _l_g_=Ug%3D%3D; cookie17=UU23ByQo7B9YOg%3D%3D; hng=; login=true" />
+			</map>
+		</property>
+		<!-- 结果数据类型 -->
+		<property name="dataType" value="json" />
+	</bean>
+	
+	<!-- ===================================================南航部分=================================================== -->
+
+	<!-- 配置CZ任务(国内) -->
+	<bean id="csair.com_domesic" class="com.cl.crawler.task.impl.HttpClientCrawler"
+		scope="prototype">
+		<!-- 任务类型 -->
+		<property name="inter" value="0" />
+		<!-- 站点域名 -->
+		<property name="domain" value="csair.com" />
+		<!-- 请求类型 -->
+		<property name="method" value="POST" />
+		<!-- 是否需要加代理 -->
+		<property name="isProxyNeed" value="false" />
+		<!-- 国内(大陆)请求url -->
+		<property name="url"
+			value="http://b2c.csair.com/B2C40/query/jaxb/direct/query.ao" />
+		<!-- 请求头map集 -->
+		<property name="headers">
+			<map>
+				<entry key="Host" value="b2c.csair.com" />
+				<entry key="User-Agent"
+					value="Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:38.0) Gecko/20100101 Firefox/38.0" />
+				<entry key="Accept" value="application/json, text/javascript, */*; q=0.01" />
+				<entry key="Accept-Language" value="zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3" />
+				<entry key="Accept-Encoding" value="gzip, deflate" />
+				<entry key="Content-Type" value="application/x-www-form-urlencoded; charset=UTF-8" />
+				<entry key="X-Requested-With" value="XMLHttpRequest" />
+				<entry key="Connection" value="keep-alive" />
+				<entry key="Pragma" value="no-cache" />
+				<entry key="Cache-Control" value="no-cache" />
+				<entry key="Cookie"
+					value="JSESSIONID=427E6DD07142124D959CB0583B202C58; WT-FPC=id=23e510c329120d5caff1434034338648:lv=1440329027552:ss=1440329007350:fs=1434034338648:pn=2:vn=15; pgv_pvi=367617024; WT-FPC=id=23e510c329120d5caff1434034338648:lv=1440329506066:ss=1440329007350:fs=1434034338648:pn=11:vn=15; userId4logCookie=15013552092; userType4logCookie=M; manageUrl=http%3A%2F%2Fb2c.csair.com%2FB2C40%2Fmodules%2Forder%2ForderMain.jsp%3ForderType%3D1; useridCookie=%E9%99%88%E7%A3%8A; language=zh_CN; WT.al_flight=WT.al_hctype(S)%3AWT.al_adultnum(1)%3AWT.al_childnum(0)%3AWT.al_infantnum(0)%3AWT.al_orgcity1({0})%3AWT.al_dstcity1({1})%3AWT.al_orgdate1({2})" />
+			</map>
+		</property>
+		<!-- 结果数据类型 -->
+		<property name="dataType" value="json" />
+	</bean>
+
+	<!-- 配置CZ任务(国际) -->
+	<bean id="csair.com_internation" class="com.cl.crawler.task.impl.HttpClientCrawler"
+		scope="prototype">
+		<!-- 任务类型 -->
+		<property name="inter" value="1" />
+		<!-- 站点域名 -->
+		<property name="domain" value="csair.com" />
+		<!-- 请求类型 -->
+		<property name="method" value="POST" />
+		<!-- 是否需要加代理 -->
+		<property name="isProxyNeed" value="false" />
+		<!-- 国际(港澳台)请求url -->
+		<property name="url"
+			value="http://b2c.csair.com/B2C40/query/jaxb/interDirect/query.ao" />
+		<!-- 请求头map集 -->
+		<property name="headers">
+			<map>
+				<entry key="Host" value="b2c.csair.com" />
+				<entry key="User-Agent"
+					value="Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:38.0) Gecko/20100101 Firefox/38.0" />
+				<entry key="Accept" value="application/json, text/javascript, */*; q=0.01" />
+				<entry key="Accept-Language" value="zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3" />
+				<entry key="Accept-Encoding" value="gzip, deflate" />
+				<entry key="Content-Type" value="application/x-www-form-urlencoded; charset=UTF-8" />
+				<entry key="X-Requested-With" value="XMLHttpRequest" />
+				<entry key="Connection" value="keep-alive" />
+				<entry key="Pragma" value="no-cache" />
+				<entry key="Cache-Control" value="no-cache" />
+				<entry key="Cookie"
+					value="JSESSIONID=427E6DD07142124D959CB0583B202C58; WT-FPC=id=23e510c329120d5caff1434034338648:lv=1440329027552:ss=1440329007350:fs=1434034338648:pn=2:vn=15; pgv_pvi=367617024; WT-FPC=id=23e510c329120d5caff1434034338648:lv=1440329506066:ss=1440329007350:fs=1434034338648:pn=11:vn=15; userId4logCookie=15013552092; userType4logCookie=M; manageUrl=http%3A%2F%2Fb2c.csair.com%2FB2C40%2Fmodules%2Forder%2ForderMain.jsp%3ForderType%3D1; useridCookie=%E9%99%88%E7%A3%8A; language=zh_CN; JSESSIONID=DE3D4F51525B0F0F9522E1619F02E831; WT-FPC=id=23e510c329120d5caff1434034338648:lv=1442738162912:ss=1442738101995:fs=1434034338648:pn=2:vn=19; pgv_pvi=367617024; WT-FPC=id=23e510c329120d5caff1434034338648:lv=1442738164038:ss=1442738101995:fs=1434034338648:pn=3:vn=19; userId4logCookie=15013552092; userType4logCookie=M; manageUrl=http%3A%2F%2Fb2c.csair.com%2FB2C40%2Fmodules%2Forder%2ForderMain.jsp%3ForderType%3D1; useridCookie=%E9%99%88%E7%A3%8A; language=zh_CN; WT.al_flight=WT.al_hctype(S)%3AWT.al_adultnum(1)%3AWT.al_childnum(0)%3AWT.al_infantnum(0)%3AWT.al_orgcity1({0})%3AWT.al_dstcity1({1})%3AWT.al_orgdate1({2})" />
+			</map>
+		</property>
+		<!-- 结果数据类型 -->
+		<property name="dataType" value="json" />
+	</bean>
+	
+	<!-- ===================================================东航部分=================================================== -->
+
+	<!-- 配置MU任务(通用) -->
+	<bean id="ceair.com" class="com.cl.crawler.task.impl.HttpClientCrawler"
+		scope="prototype">
+		<!-- 任务类型 -->
+		<property name="inter" value="2" />
+		<!-- 站点域名 -->
+		<property name="domain" value="ceair.com" />
+		<!-- 请求类型 -->
+		<property name="method" value="POST" />
+		<!-- 是否需要加代理 -->
+		<property name="isProxyNeed" value="false" />
+		<!-- 通用请求url -->
+		<property name="url"
+			value="http://www.ceair.com/otabooking/flight-search!doFlightSearch.shtml" />
+		<!-- 请求头map集 -->
+		<property name="headers">
+			<map>
+				<entry key="Host" value="www.ceair.com" />
+				<entry key="User-Agent"
+					value="Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:38.0) Gecko/20100101 Firefox/38.0" />
+				<entry key="Accept" value="application/json, text/javascript, */*; q=0.01" />
+				<entry key="Accept-Language" value="zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3" />
+				<entry key="Accept-Encoding" value="gzip, deflate" />
+				<entry key="Content-Type" value="application/x-www-form-urlencoded; charset=UTF-8" />
+				<entry key="X-Requested-With" value="XMLHttpRequest" />
+				<entry key="Connection" value="keep-alive" />
+				<entry key="Pragma" value="no-cache" />
+				<entry key="Cache-Control" value="no-cache" />
+				<entry key="Cookie"
+					value="Webtrends=106.39.248.134.1435391255358829; Hm_lvt_ee5764a7e879b473a7e73ec86161fbaf=1438439472,1438439643,1439819473,1440068931; __utma=101442195.1725749900.1437661356.1439819473.1440068931.4; __utmz=101442195.1440068931.4.4.utmcsr=baidu|utmccn=(organic)|utmcmd=organic; JSESSIONID=0000S_TNy3cdr5ZhxlI_J73spFn:17o8bn9i9; Hm_lpvt_ee5764a7e879b473a7e73ec86161fbaf=1440068931; __utmb=101442195.2.9.1440068933345; __utmc=101442195; __utmt=1" />
+			</map>
+		</property>
+		<!-- 结果数据类型 -->
+		<property name="dataType" value="json" />
+	</bean>
+	
+	<!-- ===================================================去哪儿部分=================================================== -->
+
+	<!-- 配置Qunar任务(国内) -->
+	<bean id="qunar.com_domesic" class="com.cl.crawler.task.impl.HttpClientCrawler"
+		scope="prototype">
+		<!-- 任务类型 -->
+		<property name="inter" value="0" />
+		<!-- 站点域名 -->
+		<property name="domain" value="qunar.com" />
+		<!-- 请求类型 -->
+		<property name="method" value="GET" />
+		<!-- 是否需要加代理 -->
+		<property name="isProxyNeed" value="false" />
+		<!-- 国内(大陆)请求url -->
+		<property name="url" value="http://flight.qunar.com/twell/longwell" />
+		<!-- 结果数据类型 -->
+		<property name="dataType" value="json" />
+	</bean>
+
+</beans>

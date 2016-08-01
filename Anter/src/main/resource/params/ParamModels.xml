@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 查询参数模板配置文件 -->
+<!-- type:其存放子节点的集合类型 - map|list|text -->
+<ParamModel type="list">
+
+	<!-- ===================================================阿里部分=================================================== -->
+
+	<!-- 淘宝国内机票查询参数模板 -->
+	<!-- status:是否实例化该模板参数;true:是,false:否 / inter:国内"0";国际"1";通用"2" -->
+	<paramMap beanName="alitrip.com_domesic" status="false" inter="0"
+		type="map">
+		<!-- 参数键值映射(%s表示值是可变的;method表示参数值的生成方式: millis/uuid/db/rand/fixed/josn) -->
+		<!-- 出发地,到达地,出发日期的顺序不允许动 -->
+		<entry key="depCity" method="db" describe="出发地" type="text">%s</entry>
+		<entry key="arrCity" method="db" describe="到达地" type="text">%s</entry>
+		<entry key="depDate" method="db" describe="出发日期" type="text">%s</entry>
+		<entry key="_ksTS" method="millis" type="text">%s_1027</entry>
+		<entry key="tripType" method="fixed" type="text">0</entry>
+		<entry key="searchSource" method="fixed" type="text">99</entry>
+		<entry key="searchBy" method="fixed" type="text">1280</entry>
+		<entry key="agentId" method="fixed" type="text">-1</entry>
+		<entry key="mode" method="fixed" type="text">outbound</entry>
+		<entry key="b2g" method="fixed" type="text">0</entry>
+		<entry key="formNo" method="fixed" type="text">-1</entry>
+	</paramMap>
+	
+	<!-- 淘宝国际机票查询参数模板 -->
+	<paramMap beanName="alitrip.com_internation" status="true"
+		inter="1" type="map">
+		<entry key="_ksTS" method="millis" type="text">%s_252</entry>
+		<entry key="searchBy" method="fixed" type="text">1281</entry>
+		<entry key="depCity" method="db" describe="出发地" type="text">%s</entry>
+		<entry key="arrCity" method="db" describe="到达地" type="text">%s</entry>
+		<entry key="depDate" method="db" describe="出发日期" type="text">%s</entry>
+		<entry key="arrDate" method="fixed" type="text"></entry>
+		<entry key="tripType" method="fixed" type="text">0</entry>
+		<entry key="agentId" method="fixed" type="text">-1</entry>
+		<entry key="queryRecordId" method="uuid" type="text">%s</entry>
+		<entry key="mode" method="fixed" type="text">outbound</entry>
+		<entry key="b2g" method="fixed" type="text">0</entry>
+		<entry key="formNo" method="fixed" type="text">-1</entry>
+	</paramMap>
+	
+	<!-- ===================================================南航部分=================================================== -->
+	
+	<!-- 南航国内机票查询参数模板 -->
+	<paramMap beanName="csair.com_domesic" status="false"
+		inter="0" type="map">
+		<entry key="json" trans="json" type="map">
+			<subentry key="depcity" method="db" describe="出发地" type="text">%s</subentry>
+			<subentry key="arrcity" method="db" describe="到达地" type="text">%s</subentry>
+			<!-- filter:过滤掉多余的字符串 -->
+			<subentry key="flightdate" method="db" describe="出发日期" type="text" filter="-">%s</subentry>
+			<subentry key="adultnum" method="fixed" type="text">1</subentry>
+			<subentry key="childnum" method="fixed" type="text">0</subentry>
+			<subentry key="infantnum" method="fixed" type="text">0</subentry>
+			<subentry key="cabinorder" method="fixed" type="text">0</subentry>
+			<subentry key="airline" method="fixed" type="text">1</subentry>
+			<subentry key="flytype" method="fixed" type="text">0</subentry>
+			<subentry key="international" method="fixed" type="text">0</subentry>
+			<subentry key="action" method="fixed" type="text">0</subentry>
+			<subentry key="segtype" method="fixed" type="text">1</subentry>
+			<subentry key="cache" method="fixed" type="text">0</subentry>
+			<subentry key="preUrl" method="fixed" type="text"></subentry>
+		</entry>
+	</paramMap>
+
+	<!-- 南航国际机票查询参数模板 -->
+	<paramMap beanName="csair.com_internation" status="true"
+		inter="1" type="map">
+		<entry key="json" trans="json" type="map">
+			<subentry key="depcity" method="db" describe="出发地" type="text">%s</subentry>
+			<subentry key="arrcity" method="db" describe="到达地" type="text">%s</subentry>
+			<subentry key="flightdate" method="db" describe="出发日期" type="text" filter="-">%s</subentry>
+			<subentry key="adultnum" method="fixed" type="text">1</subentry>
+			<subentry key="childnum" method="fixed" type="text">0</subentry>
+			<subentry key="infantnum" method="fixed" type="text">0</subentry>
+			<subentry key="cabinorder" method="fixed" type="text">0</subentry>
+			<subentry key="airline" method="fixed" type="text">1</subentry>
+			<subentry key="flytype" method="fixed" type="text">0</subentry>
+			<subentry key="international" method="fixed" type="text">1</subentry>
+			<subentry key="action" method="fixed" type="text">0</subentry>
+			<subentry key="segtype" method="fixed" type="text">1</subentry>
+			<subentry key="cache" method="fixed" type="text">0</subentry>
+			<subentry key="preUrl" method="fixed" type="text"></subentry>
+		</entry>
+	</paramMap>
+	
+	<!-- ===================================================东航部分=================================================== -->
+	
+	<!-- 东方航空通用机票查询参数模板 -->
+	<paramMap beanName="ceair.com" status="true" inter="2" type="map">
+		<entry key="rand" method="rand" type="text">%s</entry>
+		<!-- trans=json时,要将其值装换成json格式 -->
+		<entry key="searchCond" trans="json" type="map">
+			<subentry key="tripType" method="fixed" type="text">OW</subentry>
+			<subentry key="adtCount" method="fixed" type="text">1</subentry>
+			<subentry key="chdCount" method="fixed" type="text">0</subentry>
+			<subentry key="infCount" method="fixed" type="text">0</subentry>
+			<subentry key="currency" method="fixed" type="text">CNY</subentry>
+			<subentry key="sortType" method="fixed" type="text">a</subentry>
+			<subentry key="sortExec" method="fixed" type="text">a</subentry>
+			<subentry key="page" method="fixed" type="text">0</subentry>
+			<!-- type=list,要将自子节点的参数放在list集合里 -->
+			<subentry key="segmentList" type="list">
+				<sunentry key="deptCd" method="db" describe="出发地" type="text">%s</sunentry>
+				<sunentry key="deptDt" method="db" describe="出发日期" type="text">%s</sunentry>
+				<sunentry key="arrCd" method="db" describe="到达地" type="text">%s</sunentry>
+			</subentry>
+		</entry>
+	</paramMap>
+</ParamModel>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<!-- 线程池配置 -->
+
+	<!-- Beans Declaration -->
+	<bean id="myThreadPoolMonitorService"
+		class="com.cl.pool.thread.impl.MyThreadPoolMonitorService">
+		<property name="monitoringPeriod" value="3" />
+	</bean>
+
+	<bean id="myRejectedExecutionHandler"
+		class="com.cl.pool.executor.impl.MyRejectedExecutionHandler"></bean>
+
+	<bean id="myThreadPoolExecutorService"
+		class="com.cl.pool.executor.impl.MyThreadPoolExecutorService">
+		<property name="corePoolSize" value="5" />
+		<property name="maxPoolSize" value="10" />
+		<property name="keepAliveTime" value="20" />
+		<property name="queueCapacity" value="150" />
+		<property name="myRejectedExecutionHandler" ref="myRejectedExecutionHandler" />
+	</bean>
+
+	<!-- 
+	<bean id="starterFetch" class="com.cl.pool.starter.StarterFetch">
+		<property name="myThreadPoolMonitorService" ref="myThreadPoolMonitorService" />
+		<property name="myThreadPoolExecutorService" ref="myThreadPoolExecutorService" />
+	</bean>
+	<bean id="starterExtract" class="com.cl.aircrawler.service.thread.StarterExtract"> 
+		<property name="myThreadPoolExecutorService" ref="myThreadPoolExecutorService"/> 
+	</bean>
+	 -->
+
+</beans>

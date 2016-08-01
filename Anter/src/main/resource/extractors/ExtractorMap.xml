@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- extractor的springBean映射 -->
+<ExtractorMaps>
+	<map domain="alitrip.com" inter="0" bean="aliDomdataParser" />
+	<map domain="alitrip.com" inter="1" bean="aliInterdataParser" />
+	<map domain="csair.com" inter="0" bean="czDomdataParser" />
+	<map domain="csair.com" inter="1" bean="czInterdataParser" />
+	<map domain="ceair.com" inter="2" bean="mudataParser" />
+</ExtractorMaps>

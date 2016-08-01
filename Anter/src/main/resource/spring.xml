@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:task="http://www.springframework.org/schema/task"
+	 xsi:schemaLocation="http://www.springframework.org/schema/beans
+			http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+			http://www.springframework.org/schema/context
+			http://www.springframework.org/schema/context/spring-context-4.1.xsd
+			http://www.springframework.org/schema/task
+			http://www.springframework.org/schema/task/spring-task-4.1.xsd">
+	<!-- 扫描service自动注入为bean -->
+	<context:component-scan base-package="com.cl.crawler" /> 
+		
+<!--  加载配置文件 
+	<context:property-placeholder location="classpath:config.properties"/>
+	
+
+	配置任务线性池  
+    <task:executor id="executor" pool-size="3" />  
+    <task:scheduler id="scheduler" pool-size="3" />  
+    启用annotation方式  
+    <task:annotation-driven scheduler="scheduler" executor="executor" proxy-target-class="true" />
+    
+    启动spring容器自动执行 
+    <bean id="priceAdjustUtil" class="com.hsnn.medstgmini.util.PriceAdjustUtil">
+    	<property name="pricePlanManager" ref="pricePlanManager"/>
+    </bean>
+
+    <bean  id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="maxUploadSize" value="20000000"/>
+    </bean> -->
+
+	<!-- 这样设置system.properties可以在java类中调用其中的配置项 -->
+    <bean id="sysProp" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+        <property name="locations">
+            <list>
+                <value>classpath:system.properties</value>
+            </list>
+        </property>
+    </bean>
+
+</beans>

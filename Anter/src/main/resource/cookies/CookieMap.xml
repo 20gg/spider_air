@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- cookie的springBean映射 -->
+<CookieMaps>
+	<map domain="alitrip.com" inter="0" bean="aliCookie_domesic" />
+	<map domain="alitrip.com" inter="1" bean="aliCookie_internation" />
+	<map domain="csair.com" inter="0" bean="czCookie" />
+	<map domain="csair.com" inter="1" bean="czCookie" />
+	<map domain="ceair.com" inter="2" bean="muCookie" />
+</CookieMaps>

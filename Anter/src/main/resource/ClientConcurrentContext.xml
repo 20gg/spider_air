@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+	<!-- client并发&参数设置 -->
+
+	<!-- 配置client并发参数模版类 -->
+	<bean id="httpClientConcurrentParam" class="com.cl.httpclient4.entity.HttpClientConcurrentParam">
+		<property name="hostName" value="" />
+		<!-- 设置一个httpclient的最大连接数 -->
+		<property name="maxTotal" value="5" />
+		<!-- 每个路由默认连接数 -->
+		<property name="defaultMaxPerRoute" value="2" />
+		<property name="maxPerRoute" value="" />
+	</bean>
+	
+	<!-- 配置client参数模版类 -->
+	<bean id="commonClientParameter" class="com.cl.httpclient4.entity.CommonClientParameter">
+		<property name="httpClientConcurrentParam" ref="httpClientConcurrentParam" />
+		<!-- 超时设置(单位:s) -->
+		<property name="timeOut" value="10" />
+	</bean>
+	
+</beans>

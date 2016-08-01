@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+	<!-- CookieManager spring配置模板 -->
+
+	<!-- ===================================================阿里部分=================================================== -->
+
+	<!-- 配置Ali CookieManager(国内) -->
+	<bean id="aliCookie_domesic" class="com.cl.cookie.manager.impl.CookieManageImpl" >
+		<!-- cookies集合 -->
+		<property name="cookiedir">
+			<value>./../Anter/src/main/resource/cookies/Cookies.xml</value>
+		</property>
+		<property name="name">
+			<value>alitrip.com_domesic</value>
+		</property>		
+		<property name="maxUseNum">
+			<value>150</value>
+		</property>			
+	</bean>
+	
+	<!-- 配置Ali CookieManager(国际) -->
+	<bean id="aliCookie_internation" class="com.cl.cookie.manager.impl.CookieManageImpl" >
+		<!-- cookies集合 -->
+		<property name="cookiedir">
+			<value>./../Anter/src/main/resource/cookies/Cookies.xml</value>
+		</property>
+		<property name="name">
+			<value>alitrip.com_internation</value>
+		</property>		
+		<property name="maxUseNum">
+			<value>50</value>
+		</property>			
+	</bean>	
+	
+	<!-- ===================================================南航部分=================================================== -->
+
+	<!-- 配置CZ CookieManager -->
+	<bean id="czCookie" class="com.cl.cookie.manager.impl.CookieManageImpl" >
+		<property name="cookiedir">
+			<value>./../Anter/src/main/resource/cookies/Cookies.xml</value>
+		</property>
+		<property name="name">
+			<value>csair.com</value>
+		</property>		
+		<property name="maxUseNum">
+			<value>100</value>
+		</property>					
+	</bean>
+	
+	<!-- ===================================================东航部分=================================================== -->
+	
+	<!-- 配置MU CookieManager -->
+	<bean id="muCookie" class="com.cl.cookie.manager.impl.CookieManageImpl" >
+		<property name="cookiedir">
+			<value>./../Anter/src/main/resource/cookies/Cookies.xml</value>
+		</property>
+		<property name="name">
+			<value>ceair.com</value>
+		</property>	
+		<property name="maxUseNum">
+			<value>200</value>
+		</property>						
+	</bean>
+</beans>
